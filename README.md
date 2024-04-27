@@ -82,4 +82,8 @@ So, ready to add some sparkle to this challenge? Let's make these diamonds shine
 ---
 
 ## How to run
-Please fill this section as part of the assignment.
+
+### Challenge 1 
+This challenge is composed of 2 notebooks:
+- Data Exploration
+- Model selection
