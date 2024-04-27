@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Diamond Price Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Diamond Price Predictor</h1>
+      <form method="post" action="/predict">
+        <label for="depth">Depth:</label>
+        <input type="number" name="depth" id="depth" step="0.01" required><br>
+        <label for="table">Table:</label>
+        <input type="number" name="table" id="table" step="0.01" required><br>
+        <label for="cut">Cut:</label>
+        <select name="cut" id="cut" required>
+          <option value="">Select a cut</option>
+          <option value="1">Ideal</option>
+          <option value="2">Premium</option>
+          <option value="3 Good">Very Good</option>
+          <option value="4">Good</option>
+          <option value="5">Fair</option>
+        </select><br>
+        <label for="color">Color:</label>
+        <select name="color" id="color" required>
+          <option value="">Select a color</option>
+          <option value="1">D</option>
+          <option value="2">E</option>
+          <option value="3">F</option>
+          <option value="4">G</option>
+          <option value="5">H</option>
+          <option value="6">I</option>
+          <option value="7">J</option>
+        </select><br>
+        <label for="clarity">Clarity:</label>
+        <select name="clarity" id="clarity" required>
+          <option value="">Select a clarity</option>
+          <option value="1">FL</option>
+          <option value="2">IF</option>
+          <option value="3">VVS1</option>
+          <option value="4">VVS2</option>
+          <option value="5">VS1</option>
+          <option value="6">VS2</option>
+          <option value="7">SI1</option>
+          <option value="8">SI2</option>
+          <option value="9">I1</option>
+          <option value="10">I2</option>
+          <option value="11">I3</option>
+        </select><br>
+        <label for="carat">Carat:</label>
+        <input type="number" name="carat" id="carat" step="0.01" required><br>
+        
+        <button type="submit">Predict Price</button>
+        </form>
+        <div id="result-container">
+          <p>Predicted Price:</p>
+          <span id="predicted-price"></span>
+      </div>
+        <script>
+          const form = document.querySelector('form');
+          const resultContainer = document.getElementById('result-container');
+          const predictedPrice = document.getElementById('predicted-price');
+              form.addEventListener('submit', (e) => {
+                  e.preventDefault();
+                  const cut = document.getElementById('cut').value;
+                  const xhr = new XMLHttpRequest();
+                  xhr.open('POST', '/');
+                  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                  xhr.onload = () => {
+                      if (xhr.status === 200) {
+                          console.log(xhr.responseText)
+                          const data = JSON.parse(xhr.responseText);
+                          predictedPrice.textContent = `$${data.price.toFixed(2)}`;
+                          resultContainer.style.display = 'block';
+                      }
+                  };
+                  xhr.send(`cut=${cut}`);
+              });
+          </script>
+    </body>
+</html>
+ 
