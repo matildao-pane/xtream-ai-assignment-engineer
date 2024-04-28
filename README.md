@@ -105,7 +105,7 @@ more info in the challenge_2 [readme](./challenge_2/README.md).
 This web application allows users to input diamond features and receive the predicted price. 
 The app is developed using Flask.
 
-## Running the Server
+#### Running the Server
 
 To run the server, execute the following command in your terminal:
 
