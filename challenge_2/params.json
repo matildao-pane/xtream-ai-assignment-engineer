@@ -1,5 +1,5 @@
 {
-    "last_dataset_update": "20240428_215157",
+    "last_dataset_update": "20240429_000056",
     "model_version": "xgboost",
     "objective": "reg:squarederror",
     "colsample_bytree": 0.9,
@@ -12,7 +12,7 @@
     "training_size": 3990,
     "test_size": 998,
     "train_temp_split_percentage": 0.2,
-    "exp_id": "20240428_215157",
+    "exp_id": "20240429_000056",
     "log_exp_path": "",
     "json_path": ""
 }
