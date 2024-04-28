@@ -90,7 +90,7 @@ This challenge is composed of 2 notebooks:
 
 ### Challenge 2
 
-to run the pipeline:
+To run the pipeline:
 
 ```bash
 python main.py
@@ -98,14 +98,14 @@ python main.py
 
 To see the raw to clean data pipeline delete all files from raw_data and clean_data folder and run the main.py file
 
-more info in the challenge_2 [readme](./challenge_2/README.md).
+More info in the challenge_2 [readme](./challenge_2/README.md).
 
 ### Challenge 3
 
 This web application allows users to input diamond features and receive the predicted price. 
 The app is developed using Flask.
 
-## Running the Server
+#### Running the Server
 
 To run the server, execute the following command in your terminal:
 
