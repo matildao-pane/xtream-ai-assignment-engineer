@@ -87,3 +87,34 @@ So, ready to add some sparkle to this challenge? Let's make these diamonds shine
 This challenge is composed of 2 notebooks:
 - Data Exploration
 - Model selection
+
+### Challenge 2
+
+to run the pipeline:
+
+```bash
+python main.py
+```
+
+To see the raw to clean data pipeline delete all files from raw_data and clean_data folder and run the main.py file
+
+more info in the challenge_2 [readme](./challenge_2/README.md).
+
+### Challenge 3
+
+This web application allows users to input diamond features and receive the predicted price. 
+The app is developed using Flask.
+
+## Running the Server
+
+To run the server, execute the following command in your terminal:
+
+```bash
+python app.py
+```
+
+Follow this link to reach the webapp:
+
+```
+http://127.0.0.1:5000
+```

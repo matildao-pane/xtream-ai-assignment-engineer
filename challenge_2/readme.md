@@ -1,59 +1,47 @@
 # Challenge 2
 
-### dataset/new_data
-new_data is the directory where periodically new data is added
-the filenames represent the date of arrival 
+## Directory Structure:
 
-example:
-- 04/04
-- 05/04
-- 08/04
-- 09/04
+### `dataset/new_data`:
+This directory stores periodically added new data. Each file's name represents the date of arrival. Example:
+- `04/04.csv`
+- `05/04.csv`
+- `08/04.csv`
+- `09/04.csv`
 
-### in dataset/raw_data
-There are different versions of the dataset, everytime that there are new files in the newdata directory, a new aggregated dataframe is created and saved in raw_data. it is given in input to the cleaning class
-from raw_data the latest file will be taken and cleaned and saved with current date too
+### `dataset/raw_data`:
+Different versions of the dataset are stored here. Whenever new files are added to `new_data`, a new aggregated dataframe is created and saved in `raw_data`. This aggregated file is then used as input for the cleaning process. Example:
+- `06/04.csv` (aggregates data from `new_data`: `04/04.csv` and `05/04.csv`)
+- `11/04.csv` (aggregates data from `new_data`: `08/04.csv` and `09/04.csv`)
 
-example:
-- 06/04  (aggregates the data that that in new_data dir are: 04/04 and 05/04)
-- 11/04 (aggregates the data that that in new_data dir are: 08/04 and 09/04)
+### `dataset/clean_data`:
+Cleaned data, ready for preprocessing, is stored here. Each file corresponds to the cleaned version of the latest file in `raw_data`. Example:
+- `06/04.csv` (derived from `raw_data` file `06/04.csv`)
+- `11/04.csv` (derived from `raw_data` file `11/04.csv`)
 
-### In dataset/clean_data:
-is stored cleaned data ready to receive aggregated preprocessing.
-At every training the whole clean_data is being aggregated to perform a new training.
+Operations performed on the data in this folder include:
+- Removing zero values
+- Removing NaN values
+- Removing negative prices
+- Removing duplicates
+- Removing columns 'y' and 'z'
+- Log transformation
+- Label encoding
 
-example:
-- 06/04  (comes from the raw_data 06/04)
-- 11/04 (comes from the raw_data 11/04)
+## Classes:
 
-The data in this folder received operations that can be performed in separate batches of data (for each new batch of data separately):
-- remove 0 values
-- remove na values
-- remove negative prices
-- remove duplicates 
-- remove columns y e z
-- transform to log
-- label encoding
+### `DataLoader` class:
+This class reads from `new_data` and writes to `raw_data`. It aggregates all files newer than the last update field in parameters and saves them in `raw_data` with the current date as the filename.
 
-### dataloader class:
-all the files newer than the last update field in params will be aggregated and saved in raw data with current date as filename in raw data
-this class reads from /new_data and writes inside /raw_data
+### `DataProcessor` class:
+This class reads from `clean_data` and directly serves data to the model. It performs two types of operations:
+1. Operations that can be performed on separate batches of data, as explained above.
+2. Operations that must be performed on an aggregated form of the data, including removing outliers and calculating scalers.
 
-### dataprocessor class:
-This class reads from /clean_data and directly serve data to the model.
+## Logs and Experiments:
 
-This class  perform two kinds of operations:
-
-1) Operations that can be performed in separate batches of data (for each new batch of data separately) as seen in the clean_data directiory explanation above
-
-2) Operations that must be performed in a aggregated form (aggregating all the clean data):
-- remove outliers
-- split and calculate scaler
-
-### in logs_experiments
-are stored different trainings made with different datasets.
-inside each training folder there are:
-- a file with usefull variables and hyperparameters
-- the trained model pickle 
-- plots
-
+### `/logs_experiments`:
+Different trainings made with various datasets are stored here. Each training folder contains:
+- A file with useful variables and hyperparameters
+- The trained model pickle
+- Plots
