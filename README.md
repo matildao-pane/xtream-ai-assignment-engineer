@@ -83,6 +83,12 @@ So, ready to add some sparkle to this challenge? Let's make these diamonds shine
 
 ## How to run
 
+Assuming that you already have Jupyter and the ipypackage already up, install the required libraries:
+
+```bash
+ pip install -r requirements.txt
+```
+
 ### Challenge 1 
 This challenge is composed of 2 notebooks:
 - Data Exploration
@@ -90,7 +96,7 @@ This challenge is composed of 2 notebooks:
 
 ### Challenge 2
 
-To run the pipeline:
+To run the pipeline from the Challenge 2 directory:
 
 ```bash
 python main.py
@@ -107,7 +113,7 @@ The app is developed using Flask.
 
 #### Running the Server
 
-To run the server, execute the following command in your terminal:
+To run the server, execute the following command in your terminal from the Challenge 3 directory:
 
 ```bash
 python app.py
