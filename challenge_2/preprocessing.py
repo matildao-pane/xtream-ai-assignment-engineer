@@ -3,8 +3,10 @@ import numpy as np
 import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from config import Config_Path
+from path_config import Path_Config
 from params import Params
+
+
 columns =  ['carat', 'cut', 'color', 'clarity', 'depth', 'table', 'price', 'x', 'y', 'z']
 columns_to_remove = ['y','z']
 cut_order = ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal']
@@ -12,11 +14,11 @@ color_order = reversed([chr(i) for i in range(ord('D'), ord('Z')+1)])
 clarity_order = ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1','IF']
 
 
-class DatasetPreprocessing:
-    def __init__(self,paths, last_update, test_size=0.2, random_state=35):
+class DatasetProcessor:
+    def __init__(self,paths, last_update, train_test_split_percentage, random_state):  #TODO leggi da params
         self.paths = paths
         self.last_update = last_update
-        self.test_size=test_size
+        self.test_size=train_test_split_percentage
         self.random_state=random_state
  
     def process_single_batch(self,df):
@@ -27,8 +29,7 @@ class DatasetPreprocessing:
             remove duplicates 
             remove columns y e z
             transform price and carat columns to log
-            
-            TODO convert cat in numerical
+            label encoding
         """
         #remove Na, =0, <0, duplicates, correlated columns
         df = df[df[columns] != 0]
@@ -68,11 +69,11 @@ class DatasetPreprocessing:
         X_test_scaled = scaler.transform(X_test)
         X_train = X_train_scaled
         X_test = X_test_scaled
-        return X_train, X_test
+        return X_train, X_test, scaler
 
-    def save_scaler(self, scaler, filename):
-        scaler_file = self.data_dir / 'scalers' / filename
-        with open(scaler_file, 'wb') as f:
+    def save_scaler(self, scaler, scaler_file):
+        scaler_path = self.paths.clean_data_dir / str(scaler_file + '_skaler.pkl')
+        with open(scaler_path, 'wb') as f:
             pickle.dump(scaler, f)
 
     def remove_outliers(self,df):
@@ -94,7 +95,7 @@ class DatasetPreprocessing:
         #todo check se esiste gia un file co stesso nome in clean
         csv_files = list(self.paths.raw_data_dir.glob('*.csv'))
         if not csv_files:
-            print('add exception here')
+            print('No new data to clean')
         latest_file = max(csv_files, key=lambda file: file.stat().st_mtime)
         
         new_df = pd.read_csv(latest_file)
@@ -116,19 +117,19 @@ class DatasetPreprocessing:
         X_train, X_test, y_train, y_test = self.split_data(df)
 
         # Scale the dataset
-        X_train, X_test = self.scale_data(X_train, X_test)
+        X_train, X_test, scaler = self.scale_data(X_train, X_test)
 
         # Save the scaler
-        scaler_file = self.paths.data_dir / 'scalers' / latest_file.stem
-        self.save_scaler(scaler, scaler_file)
+ 
+        self.save_scaler(scaler, latest_file.stem)
 
-        return X_train, X_test, y_train, y_test
+        return X_train, X_test, y_train, y_test, df.columns.tolist(), df
     
 if __name__ == '__main__':
-    paths = Config_Path()
+    paths =  Path_Config()
     params = Params(paths.params_path)
 
-    ds = DatasetPreprocessing(paths,  params.last_dataset_update)
-    ds.preprocess()
- 
+    ds = DatasetProcessor(paths,  params.last_dataset_update, params.train_temp_split_percentage , params.rand_state )
+    X_train, X_test, y_train, y_test, col, df = ds.preprocess()
+    print(X_train, X_test, y_train, y_test)
  

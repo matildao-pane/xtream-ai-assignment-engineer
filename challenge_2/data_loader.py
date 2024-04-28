@@ -4,7 +4,7 @@ import glob
 import pandas as pd
 from datetime import datetime
 from pathlib import Path
-from config import Config_Path
+from path_config import Path_Config
 from params import Params
 
 class DataLoader:
@@ -39,16 +39,22 @@ class DataLoader:
                 newer_files.append(file)
         
         if len(newer_files) == 0:
-            raise ValueError(f"No newer files since {last_update_date}")
-            #TODO FAI CONTINUARE IL PROGRAMMA
+            print(f"No newer files since {last_update_date}, no new raw aggregated data will be done")
+ 
         return newer_files
 
     def load_new_data(self):
         last_update = datetime.strptime(self.last_update, '%Y%m%d_%H%M%S')
         new_files = self.get_newer_files(self.dataset_dir / 'new_data', last_update)
-        df = self.concatenate_csv_files(new_files)
+        
         now = datetime.now()
         filename = now.strftime("%Y%m%d_%H%M%S")
+        
+        if len(new_files)==0:
+            return filename
+        
+        df = self.concatenate_csv_files(new_files)
+
         df.to_csv((self.dataset_dir / 'raw_data') / str(filename + '.csv'), index=False)
 
         print(df.head(), len(df))
@@ -59,7 +65,7 @@ class DataLoader:
 
 if __name__ == '__main__':
     
-    paths = Config_Path()
+    paths = Path_Config()
     params = Params(paths.params_path)
 
     data_loader = DataLoader(paths.data_dir, params.last_dataset_update)  
@@ -67,6 +73,3 @@ if __name__ == '__main__':
     
     params.last_dataset_update = last_update
     params.save(paths.params_path)
-    
-    
-

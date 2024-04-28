@@ -1,7 +1,7 @@
 #in this file we have the directories paths 
 from pathlib import Path
 
-class Config_Path:
+class Path_Config:
     def __init__(self):
         self.main_dir = Path('.').absolute()/'challenge_2'
         self.data_dir = self.main_dir/'datasets'
@@ -13,7 +13,7 @@ class Config_Path:
        
         
 if __name__ == "__main__":
-    config = Config_Path( )
+    config = Path_Config( )
     print(config.main_dir )
     print(config.data_dir)
     print(config.new_data_dir.is_dir())
