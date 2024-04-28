@@ -65,7 +65,6 @@ def eval(X_test, y_test, dir):
     print(f'\nRMSE: {rmse}, \nR2 Score: {r2}, \nMAE: {mae}' )
     plot(y_test, y_pred, dir)
  
- 
 if __name__ == '__main__':
     
     # SETUP
@@ -101,7 +100,7 @@ if __name__ == '__main__':
     params.last_dataset_update =  date_and_time_str
     params.save(paths.params_path)
  
-    plot_features(params.log_exp_path, X_train, X_test, df)  #TODO 
+    plot_features(params.log_exp_path, X_train, X_test, df)   
     
     # TRAINING  
     model = XGBRegressor(seed=params.rand_state, objective=params.objective, colsample_bytree= params.colsample_bytree, 

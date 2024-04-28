@@ -15,7 +15,7 @@ clarity_order = ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1','IF']
 
 
 class DatasetProcessor:
-    def __init__(self,paths, last_update, train_test_split_percentage, random_state):  #TODO leggi da params
+    def __init__(self,paths, last_update, train_test_split_percentage, random_state):  
         self.paths = paths
         self.last_update = last_update
         self.test_size=train_test_split_percentage
@@ -31,18 +31,18 @@ class DatasetProcessor:
             transform price and carat columns to log
             label encoding
         """
-        #remove Na, =0, <0, duplicates, correlated columns
+        # Remove Na, =0, <0, duplicates, correlated columns
         df = df[df[columns] != 0]
         df = df.dropna(subset=columns)
         df = df[df['price'] >= 0]
         df = df.drop_duplicates()
         df = df.drop(columns=columns_to_remove)
         
-        #log trasformation
+        # Log trasformation
         df['price'] = np.log1p(df['price'])
         df['carat'] = np.log1p(df['carat'])
         
-        #label encoding
+        # Label encoding
         df['cut'] = pd.Categorical(df['cut'], categories=cut_order, ordered=True)
         df['color'] = pd.Categorical(df['color'], categories=color_order, ordered=True)
         df['clarity'] = pd.Categorical(df['clarity'], categories=clarity_order, ordered=True)
@@ -72,7 +72,7 @@ class DatasetProcessor:
         return X_train, X_test, scaler
 
     def save_scaler(self, scaler, scaler_file):
-        scaler_path = self.paths.clean_data_dir / str(scaler_file + '_skaler.pkl')
+        scaler_path = self.paths.clean_data_dir / str(scaler_file + '_scaler.pkl')
         with open(scaler_path, 'wb') as f:
             pickle.dump(scaler, f)
 
@@ -100,17 +100,17 @@ class DatasetProcessor:
         
         new_df = pd.read_csv(latest_file)
         
-        #preprocess the new single batch
+        # Preprocess the new single batch
         new_clean_df = self.process_single_batch(new_df)
         
-        #save in clean dir
+        # Save in clean dir
         new_clean_df.to_csv(self.paths.clean_data_dir/latest_file.name, index=False)
          
         # Concatenate all datasets in the clean data directory
         df = self.load_clean_data()     
         
-        #perform operations that must be done aggregately:
-        #remove outliers
+        # Perform operations that must be done aggregately:
+        # Remove outliers
         df = self.remove_outliers(df)
         
         # Split the dataset
@@ -120,7 +120,6 @@ class DatasetProcessor:
         X_train, X_test, scaler = self.scale_data(X_train, X_test)
 
         # Save the scaler
- 
         self.save_scaler(scaler, latest_file.stem)
 
         return X_train, X_test, y_train, y_test, df.columns.tolist(), df
