@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Diamond Price Predictor</title>
+    <title>Sharp DaDiamond Price</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
 
   <body>
     <div class="container">
-      <h1>Diamond Price Predictor</h1>
+      <h1>Sharp DaDiamond Price</h1>
+      <a>$$$ Property of Don Francesco Industries $$$<a>
       <form method="post" action="/predict">
         <label for="depth">Depth:</label>
         <input type="number" name="depth" id="depth" step="0.01" required><br>
@@ -21,7 +22,7 @@
           <option value="">Select a cut</option>
           <option value="1">Ideal</option>
           <option value="2">Premium</option>
-          <option value="3 Good">Very Good</option>
+          <option value="3">Very Good</option>
           <option value="4">Good</option>
           <option value="5">Fair</option>
         </select><br>
@@ -53,8 +54,10 @@
         </select><br>
         <label for="carat">Carat:</label>
         <input type="number" name="carat" id="carat" step="0.01" required><br>
-        
-        <button type="submit">Predict Price</button>
+        <label for="x">X:</label>
+        <input type="number" name="x" id="x" step="0.01" required><br>
+   
+        <button type="submit"> $$$ Predict Price $$$ </button>
         </form>
         <div id="result-container">
           <p>Predicted Price:</p>
@@ -67,6 +70,13 @@
               form.addEventListener('submit', (e) => {
                   e.preventDefault();
                   const cut = document.getElementById('cut').value;
+                  const depth =   document.getElementById('depth').value;
+                  const table =   document.getElementById('table').value;
+                  const color =   document.getElementById('color').value;
+                  const clarity = document.getElementById('clarity').value;
+                  const carat =   document.getElementById('carat').value;
+                  const x = document.getElementById('x').value;
+
                   const xhr = new XMLHttpRequest();
                   xhr.open('POST', '/');
                   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -78,7 +88,7 @@
                           resultContainer.style.display = 'block';
                       }
                   };
-                  xhr.send(`cut=${cut}`);
+                  xhr.send(`cut=${cut}&depth=${depth}&table=${table}&color=${color}&clarity=${clarity}&carat=${carat}&x=${x}`);
               });
           </script>
     </body>
