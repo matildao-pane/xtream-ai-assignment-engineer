@@ -14,9 +14,9 @@
       <a>$$$ Property of Don Francesco Industries $$$<a>
       <form method="post" action="/predict">
         <label for="depth">Depth:</label>
-        <input type="number" name="depth" id="depth" step="0.01" required><br>
+        <input type="number" name="depth" id="depth" min="0" step="0.01" required><br>
         <label for="table">Table:</label>
-        <input type="number" name="table" id="table" step="0.01" required><br>
+        <input type="number" name="table" id="table" min="0" step="0.01" required><br>
         <label for="cut">Cut:</label>
         <select name="cut" id="cut" required>
           <option value="">Select a cut</option>
@@ -29,29 +29,29 @@
         <label for="color">Color:</label>
         <select name="color" id="color" required>
           <option value="">Select a color</option>
-          <option value="23">D</option>
-          <option value="22">E</option>
-          <option value="21">F</option>
-          <option value="20">G</option>
-          <option value="19">H</option>
-          <option value="18">I</option>
-          <option value="17">J</option>
-          <option value="16">K</option>
-          <option value="15">L</option>
-          <option value="14">M</option>
-          <option value="13">N</option>
-          <option value="12">O</option>
-          <option value="11">P</option>
-          <option value="10">Q</option>
-          <option value="9">R</option>
-          <option value="8">S</option>
-          <option value="7">T</option>
-          <option value="6">U</option>
+          <option value="22">D</option>
+          <option value="21">E</option>
+          <option value="20">F</option>
+          <option value="19">G</option>
+          <option value="18">H</option>
+          <option value="17">I</option>
+          <option value="16">J</option>
+          <option value="15">K</option>
+          <option value="14">L</option>
+          <option value="13">M</option>
+          <option value="12">N</option>
+          <option value="11">O</option>
+          <option value="10">P</option>
+          <option value="9">Q</option>
+          <option value="8">R</option>
+          <option value="7">S</option>
+          <option value="6">T</option>
+          <option value="5">U</option>
           <option value="5">V</option>
-          <option value="4">W</option>
-          <option value="3">X</option>
-          <option value="2">Y</option>
-          <option value="1">Z</option>
+          <option value="3">W</option>
+          <option value="2">X</option>
+          <option value="1">Y</option>
+          <option value="0">Z</option>
         </select><br>
         <label for="clarity">Clarity:</label>
         <select name="clarity" id="clarity" required>
@@ -67,9 +67,9 @@
 
         </select><br>
         <label for="carat">Carat:</label>
-        <input type="number" name="carat" id="carat" step="0.01" required><br>
+        <input type="number" name="carat" id="carat" min="0" step="0.01" required><br>
         <label for="x">X:</label>
-        <input type="number" name="x" id="x" step="0.01" required><br>
+        <input type="number" name="x" id="x" min="0" step="0.01" required><br>
    
         <button type="submit"> $$$ Predict Price $$$ </button>
         </form>
