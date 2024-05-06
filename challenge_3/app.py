@@ -23,8 +23,19 @@ def index():
         color = int(data['color'])
         clarity = int(data['clarity'])
         carat = float(data['carat'])
-        price = model.predict([[carat,cut,color,clarity,depth,table,x]])[0]
-        exp_price= np.expm1(price)
+        
+        #apply preprocessing
+        carat = np.log1p(carat)  
+        with open('./challenge_2/datasets/clean_data/20240506_225853_scaler.pkl', 'rb') as file:
+            scaler = pickle.load(file) 
+        new_data = [[carat,cut,color,clarity,depth,table,x]]   
+        scaled_data = scaler.transform(new_data)
+        print(new_data)
+        price = model.predict(scaled_data)[0]
+       
+        print(price)
+        exp_price= np.expm1(price) #log/exp denorm
+        
         return jsonify({'price': float(exp_price)})
     return render_template('index.html')
  

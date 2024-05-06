@@ -88,11 +88,10 @@ class DatasetProcessor:
         # Remove outliers
         df_no_outliers = df[~((df[selected_features] < lower_limit).any(axis=1) | (df[selected_features] > upper_limit).any(axis=1))]
         
-        return df
+        return df_no_outliers
 
     def preprocess(self ):
         # Take the latest file from raw data directory
-        #todo check se esiste gia un file co stesso nome in clean
         csv_files = list(self.paths.raw_data_dir.glob('*.csv'))
         if not csv_files:
             print('No new data to clean')

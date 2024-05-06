@@ -33,8 +33,8 @@ Operations performed on the data in this folder include:
 ### `DataLoader` class:
 This class reads from `new_data` and writes to `raw_data`. It aggregates all files newer than the last update field in parameters and saves them in `raw_data` with the current date as the filename.
 
-### `DataProcessor` class:
-This class reads from `clean_data` and directly serves data to the model. It performs two types of operations:
+### `DatasetProcessor` class:
+This class reads from `raw_data` and serves clean data ready for the model. It performs two types of operations:
 1. Operations that can be performed on separate batches of data, as explained above.
 2. Operations that must be performed on an aggregated form of the data, including removing outliers and calculating scalers.
 
